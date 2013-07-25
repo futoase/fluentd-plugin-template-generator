@@ -1,0 +1,26 @@
+module Fluent
+  class <%= class_name.upcase %> < Fluent::BufferdOutput
+
+    def initialize
+      super
+    end
+
+    def configure conf
+    end
+
+
+    def start
+    end
+
+    def shutdown
+    end
+
+    def format tag, time, record
+    end
+
+    def write chunk
+      chunk.map do |c| c end
+    end
+
+  end
+end
