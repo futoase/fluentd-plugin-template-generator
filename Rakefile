@@ -10,15 +10,15 @@ namespace :fluent do
     begin
       line = Readline.readline("fluent plugin name? > ", true)
       name = "fluent-plugin-#{line}"
-      system "mkdir dist"
+      Dir.mkdir "dist"
       Dir.chdir "dist"
       system "bundle gem #{name}"
       Dir.chdir name
-      system "mkdir -p lib/fluent/#{name}"
-      system "mv lib/#{name}.rb lib/fluent/plugin/out_#{line}"
-      system "rm lib/#{name}/version.rb"
-      system "rmdir lib/#{name}"
-      system "mkdir -p test/plugin"
+      Dir.mkdir "lib/fluent/#{name}"
+      FileUtils.move "lib/#{name}.rb", "lib/fluent/plugin/out_#{line}"
+      File.delete "lib/#{name}/version.rb"
+      Dir.rmdir "lib/#{name}"
+      Dir.mkdir "test/plugin"
       system "touch test/plugin/test_out_#{line}"
       Dir.chdir File.dirname(__FILE__)
       open(cache_file, "w").write(name)
